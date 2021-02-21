@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
-import '@geoapify/geocoder-autocomplete/styles/minimal.css'
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@sector-labs/react-geocoder-autocomplete'
+import '@sector-labs/geocoder-autocomplete/styles/minimal.css'
 
 const App = () => {
 
@@ -117,6 +117,10 @@ const App = () => {
     console.log(value);
   }
 
+  function onFocusChange() {
+    console.log("onFocusCallback");
+  }
+
   return <div>
     <div className="setting" onChange={handleTypeChange}>
       <span className="label">Location type:</span>
@@ -199,6 +203,7 @@ const App = () => {
         biasByCircle={biasByCircle}
         biasByRect={biasByRect}
         biasByProximity={biasByProximity}
+        onFocus={onFocusChange}
         placeSelect={onPlaceSelect}
         suggestionsChange={onSuggectionChange}
         skipIcons={true}

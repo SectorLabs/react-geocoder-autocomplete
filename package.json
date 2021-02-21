@@ -47,7 +47,7 @@
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-dom": ">=17.0.1",
-    "@geoapify/geocoder-autocomplete": "^1.2.0"
+    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
@@ -78,6 +78,6 @@
     "dist"
   ],
   "dependencies": {
-    "@geoapify/geocoder-autocomplete": "^1.2.0"
+    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.1"
   }
 }
