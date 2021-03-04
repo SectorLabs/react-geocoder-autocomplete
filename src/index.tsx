@@ -9,7 +9,7 @@ import {
   ByCircleOptions,
   ByRectOptions,
   ByProximityOptions,
-} from "@geoapify/geocoder-autocomplete";
+} from "@sector-labs/geocoder-autocomplete";
 
 export const GeoapifyApiKey = React.createContext<string>("");
 
@@ -42,6 +42,7 @@ export interface GeoapifyGeocoderAutocompleteOptions {
 
   placeSelect: (value: any) => {};
   suggestionsChange: (value: any) => {};
+  onFocus: (value: any) => {}
 }
 
 export const GeoapifyGeocoderAutocomplete = ({
@@ -64,6 +65,7 @@ export const GeoapifyGeocoderAutocomplete = ({
 
   placeSelect: placeSelectCallback,
   suggestionsChange: suggestionsChangeCallback,
+  onFocus: onFocusCallback,
 }: GeoapifyGeocoderAutocompleteOptions) => {
   const apiKey = React.useContext<string>(GeoapifyApiKey);
   let geocoderContainer: HTMLDivElement | null;
@@ -77,9 +79,13 @@ export const GeoapifyGeocoderAutocomplete = ({
   const suggestionsChangeCallbackRef: MutableRefObject<
     ((value: any) => {}) | undefined
   > = useRef<(value: any) => {}>();
+  const onFocusCallbackRef: MutableRefObject<
+    ((value: any) => {}) | undefined
+  > = useRef<(value: any) => {}>();
 
   placeSelectCallbackRef.current = placeSelectCallback;
   suggestionsChangeCallbackRef.current =  suggestionsChangeCallback;
+  onFocusCallbackRef.current =  onFocusCallback;
 
   const onSelect = React.useCallback((value: any) => {
     if (placeSelectCallbackRef.current) {
@@ -93,11 +99,18 @@ export const GeoapifyGeocoderAutocomplete = ({
     }
   },[]);
 
+  const onFocus = React.useCallback((value: any) => {
+    if (onFocusCallbackRef.current) {
+      onFocusCallbackRef.current(value);
+    }
+  },[]);
+
   useEffect(() => {
     if (initialized) {
       if (geocoderAutocomplete.current) {
         geocoderAutocomplete.current.off("select", onSelect);
         geocoderAutocomplete.current.off("suggestions", onSuggestions);
+        geocoderAutocomplete.current.off("focus", onFocus);
       }
 
       return;
@@ -117,6 +130,7 @@ export const GeoapifyGeocoderAutocomplete = ({
 
     geocoderAutocomplete.current.on("select", onSelect);
     geocoderAutocomplete.current.on("suggestions", onSuggestions);
+    geocoderAutocomplete.current.on("focus", onFocus);
   }, []);
 
   useEffect(() => {

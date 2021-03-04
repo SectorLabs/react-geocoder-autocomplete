@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@geoapify/geocoder-autocomplete": "file:../node_modules/@geoapify/geocoder-autocomplete",
+    "@sector-labs/geocoder-autocomplete": "file:../node_modules/@sector-labs/geocoder-autocomplete",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
-    "@geoapify/react-geocoder-autocomplete": "file:..",
+    "@sector-labs/react-geocoder-autocomplete": "file:..",
     "react-scripts": "file:../node_modules/react-scripts"
   },
   "scripts": {
