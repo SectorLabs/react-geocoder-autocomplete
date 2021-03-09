@@ -1,6 +1,6 @@
 {
-  "name": "@geoapify/react-geocoder-autocomplete",
-  "version": "1.1.1",
+  "name": "@sector-labs/react-geocoder-autocomplete",
+  "version": "1.1.1-sl.2",
   "description": "React component for the Geoapify Geocoder Autocomplete field",
   "author": {
     "name": "Geoapify GmbH",
@@ -47,7 +47,7 @@
   "peerDependencies": {
     "react": ">=17.0.1",
     "react-dom": ">=17.0.1",
-    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.1"
+    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
@@ -78,6 +78,6 @@
     "dist"
   ],
   "dependencies": {
-    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.1"
+    "@sector-labs/geocoder-autocomplete": "^1.2.1-sl.2"
   }
 }
