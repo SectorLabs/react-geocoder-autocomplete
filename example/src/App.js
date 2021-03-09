@@ -121,6 +121,10 @@ const App = () => {
     console.log("onFocusCallback");
   }
 
+  function onBlurChange() {
+    console.log("onBlurCallback");
+  }
+
   return <div>
     <div className="setting" onChange={handleTypeChange}>
       <span className="label">Location type:</span>
@@ -204,12 +208,15 @@ const App = () => {
         biasByRect={biasByRect}
         biasByProximity={biasByProximity}
         onFocus={onFocusChange}
+        onBlur={onBlurChange}
         placeSelect={onPlaceSelect}
         suggestionsChange={onSuggectionChange}
         skipIcons={true}
         skipDetails={true}
       />
     </GeoapifyContext>
+
+    <input onBlur={onBlurChange} />
   </div>
 }
 

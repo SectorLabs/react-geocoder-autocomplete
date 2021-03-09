@@ -42,7 +42,8 @@ export interface GeoapifyGeocoderAutocompleteOptions {
 
   placeSelect: (value: any) => {};
   suggestionsChange: (value: any) => {};
-  onFocus: (value: any) => {}
+  onFocus: (value: any) => {};
+  onBlur: (value: any) => {};
 }
 
 export const GeoapifyGeocoderAutocomplete = ({
@@ -66,6 +67,7 @@ export const GeoapifyGeocoderAutocomplete = ({
   placeSelect: placeSelectCallback,
   suggestionsChange: suggestionsChangeCallback,
   onFocus: onFocusCallback,
+  onBlur: onBlurCallback
 }: GeoapifyGeocoderAutocompleteOptions) => {
   const apiKey = React.useContext<string>(GeoapifyApiKey);
   let geocoderContainer: HTMLDivElement | null;
@@ -82,35 +84,47 @@ export const GeoapifyGeocoderAutocomplete = ({
   const onFocusCallbackRef: MutableRefObject<
     ((value: any) => {}) | undefined
   > = useRef<(value: any) => {}>();
+  const onBlurCallbackRef: MutableRefObject<
+    ((value: any) => {}) | undefined
+  > = useRef<(value: any) => {}>();
 
   placeSelectCallbackRef.current = placeSelectCallback;
-  suggestionsChangeCallbackRef.current =  suggestionsChangeCallback;
-  onFocusCallbackRef.current =  onFocusCallback;
+  suggestionsChangeCallbackRef.current = suggestionsChangeCallback;
+  onFocusCallbackRef.current = onFocusCallback;
+  onBlurCallbackRef.current = onBlurCallback;
 
   const onSelect = React.useCallback((value: any) => {
     if (placeSelectCallbackRef.current) {
       placeSelectCallbackRef.current(value);
     }
-  },[]);
+  }, []);
 
   const onSuggestions = React.useCallback((value: any) => {
     if (suggestionsChangeCallbackRef.current) {
       suggestionsChangeCallbackRef.current(value);
     }
-  },[]);
+  }, []);
 
   const onFocus = React.useCallback((value: any) => {
     if (onFocusCallbackRef.current) {
       onFocusCallbackRef.current(value);
     }
-  },[]);
+  }, []);
+
+  const onBlur = React.useCallback((value: any) => {
+    if (onBlurCallbackRef.current) {
+      onBlurCallbackRef.current(value);
+    }
+  }, []);
+
 
   useEffect(() => {
     if (initialized) {
       if (geocoderAutocomplete.current) {
-        geocoderAutocomplete.current.off("select", onSelect);
-        geocoderAutocomplete.current.off("suggestions", onSuggestions);
-        geocoderAutocomplete.current.off("focus", onFocus);
+        geocoderAutocomplete.current.off('select', onSelect);
+        geocoderAutocomplete.current.off('suggestions', onSuggestions);
+        geocoderAutocomplete.current.off('focus', onFocus);
+        geocoderAutocomplete.current.off('blur', onBlur);
       }
 
       return;
@@ -122,15 +136,16 @@ export const GeoapifyGeocoderAutocomplete = ({
       geocoderContainer as HTMLDivElement,
       apiKey,
       {
-        placeholder: placeholderValue || "",
+        placeholder: placeholderValue || '',
         skipDetails: skipDetailsValue,
         skipIcons: skipIconsValue
       }
     );
 
-    geocoderAutocomplete.current.on("select", onSelect);
-    geocoderAutocomplete.current.on("suggestions", onSuggestions);
-    geocoderAutocomplete.current.on("focus", onFocus);
+    geocoderAutocomplete.current.on('select', onSelect);
+    geocoderAutocomplete.current.on('suggestions', onSuggestions);
+    geocoderAutocomplete.current.on('focus', onFocus);
+    geocoderAutocomplete.current.on('blur', onBlur);
   }, []);
 
   useEffect(() => {
@@ -175,7 +190,7 @@ export const GeoapifyGeocoderAutocomplete = ({
 
   useEffect(() => {
     if (geocoderAutocomplete.current) {
-      geocoderAutocomplete.current.setValue((valueValue as string) || "");
+      geocoderAutocomplete.current.setValue((valueValue as string) || '');
     }
   }, [valueValue]);
 
@@ -237,8 +252,8 @@ export const GeoapifyGeocoderAutocomplete = ({
 
   return (
     <div
-      className="geocoder-container"
-      style={{ position: "relative" }}
+      className='geocoder-container'
+      style={{ position: 'relative' }}
       ref={(el) => (geocoderContainer = el)}
     ></div>
   );
